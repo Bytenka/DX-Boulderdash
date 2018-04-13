@@ -4,7 +4,11 @@
 #include "Player.h"
 
 sf::RenderWindow *mainWindow;
-std::string ressourcesPath = "/home/hugo/Documents/Dev/DX-Boulderdash/Source_files/Ressources/";
+
+// LINUX VERSION
+//std::string ressourcesPath = "/home/hugo/Documents/Dev/DX-Boulderdash/Source_files/Ressources/";
+// WINDOWS VERSION
+std::string ressourcesPath = "D:/#Windows Stuff/Documents/Dev/DX-Boulderdash/DX-Boulderdash/Ressources/";
 
 int main()
 {
