@@ -20,7 +20,7 @@ Player::~Player()
 
 void Player::draw()
 {
-    mainWindow->draw(m_sprite);
+	gameCanvas->draw(m_sprite);
 }
 
 void Player::move(PlayerMove direction)

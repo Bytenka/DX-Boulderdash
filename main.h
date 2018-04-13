@@ -1,8 +1,6 @@
 #pragma once
-
-//Test
-
 #include <SFML/Graphics.hpp>
 
-extern sf::RenderWindow *mainWindow;
+extern sf::RenderTexture* menuCanvas;
+extern sf::RenderTexture* gameCanvas;
 extern std::string ressourcesPath;
