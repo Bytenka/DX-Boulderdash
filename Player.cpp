@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player()
-    : m_position(sf::Vector2f()), m_orientation(DOWN), canMove(true)
+    : m_position(sf::Vector2f()), m_orientation(DOWN)
 {
     if (!m_texture.loadFromFile(ressourcesPath + "player.png"))
     {
@@ -18,33 +18,45 @@ Player::~Player()
     std::cout << "Entity Player Destroyed\n";
 }
 
+void Player::update()
+{
+    if (m_movingCooldown > 0)
+        m_movingCooldown--;
+        m_sprite.setPosition(m_position);
+}
+
 void Player::draw()
 {
-	gameCanvas->draw(m_sprite);
+    update();
+    gameCanvas->draw(m_sprite);
+}
+
+void Player::resetMovingCooldown()
+{
+    m_movingCooldown = 0;
 }
 
 void Player::move(PlayerMove direction)
 {
-    if (canMove)
+    if (m_movingCooldown == 0)
     {
+        sf::Vector2f dir;
         switch (direction)
         {
         case UP:
-            std::cout << "move UP\n";
+            dir = sf::Vector2f(0, -1);
             break;
-
         case DOWN:
-            std::cout << "move DOWN\n";
+            dir = sf::Vector2f(0, 1);
             break;
-
         case LEFT:
-            std::cout << "move LEFT\n";
+            dir = sf::Vector2f(-1, 0);
             break;
-
         case RIGHT:
-            std::cout << "move RIGHT\n";
+            dir = sf::Vector2f(1, 0);
             break;
         }
-        canMove = false;
+        m_position += dir;
+        m_movingCooldown += 15;
     }
 }
