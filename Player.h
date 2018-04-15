@@ -1,31 +1,18 @@
 #pragma once
 #include "main.h"
+#include "Entity.h"
 #include <iostream>
+#include <string>
 
-class Player
+class Player : public Entity
 {
 public:
-  enum PlayerMove
-  {
-    UP = 0,
-    RIGHT,
-    DOWN,
-    LEFT
-  };
-
-public:
-  Player();
+  Player(sf::Vector2f position);
   ~Player();
-  void move(PlayerMove direction);
-  void resetMovingCooldown();
+  void move(Direction direction);
   void update();
   void draw();
-
-private:
-  sf::Vector2f m_position;
-  sf::Texture m_texture;
-  sf::Sprite m_sprite;
-  PlayerMove m_orientation;
+  void resetMovingCooldown();
 
 private:
   int m_movingCooldown = 0;

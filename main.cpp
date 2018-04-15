@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "main.h"
+#include "Entity.h"
 #include "Player.h"
 
 // LINUX AND WINDOWS BUILD
@@ -16,16 +17,13 @@ enum CanvasToDisplay
 sf::RenderTexture *menuCanvas;
 sf::RenderTexture *gameCanvas;
 CanvasToDisplay currentCanvas;
+const int g_tileSize = 40;
 
 std::string ressourcesPath = PATH_TO_RESSOURCES;
 
 int main()
 {
-	Player player = Player();
-	bool listenToUp = true;
-	bool listenToDown = true;
-	bool listenToLeft = true;
-	bool listenToRight = true;
+	Player player(sf::Vector2f(0, 0));
 
 	// Initializing drawing buffers
 	sf::RenderTexture mt;
@@ -88,13 +86,13 @@ int main()
 			else
 			{
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-					player.move(player.UP);
+					player.move(Direction::Up);
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-					player.move(player.DOWN);
+					player.move(Direction::Down);
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-					player.move(player.LEFT);
+					player.move(Direction::Left);
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-					player.move(player.RIGHT);
+					player.move(Direction::Right);
 				player.draw();
 			}
 			canvasToDisplay->display();

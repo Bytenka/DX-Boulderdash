@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player()
-    : m_position(sf::Vector2f()), m_orientation(DOWN)
+Player::Player(sf::Vector2f position)
+    : Entity("player.png")
 {
     if (!m_texture.loadFromFile(ressourcesPath + "player.png"))
     {
@@ -22,7 +22,7 @@ void Player::update()
 {
     if (m_movingCooldown > 0)
         m_movingCooldown--;
-        m_sprite.setPosition(m_position);
+    m_sprite.setPosition(m_position);
 }
 
 void Player::draw()
@@ -36,27 +36,30 @@ void Player::resetMovingCooldown()
     m_movingCooldown = 0;
 }
 
-void Player::move(PlayerMove direction)
+void Player::move(Direction direction)
 {
     if (m_movingCooldown == 0)
     {
         sf::Vector2f dir;
         switch (direction)
         {
-        case UP:
+        case Direction::Up:
             dir = sf::Vector2f(0, -1);
             break;
-        case DOWN:
+        case Direction::Down:
             dir = sf::Vector2f(0, 1);
             break;
-        case LEFT:
+        case Direction::Left:
             dir = sf::Vector2f(-1, 0);
             break;
-        case RIGHT:
+        case Direction::Right:
             dir = sf::Vector2f(1, 0);
             break;
         }
+        dir.x *= g_tileSize;
+        dir.y *= g_tileSize;
         m_position += dir;
+        std::cout << m_position.x << " " << m_position.y << std::endl;
         m_movingCooldown += 15;
     }
 }
