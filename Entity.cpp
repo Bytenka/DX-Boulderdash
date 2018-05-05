@@ -1,3 +1,6 @@
+#include <string>
+#include <iostream>
+#include "main.h"
 #include "Entity.h"
 
 Entity::Entity(std::string textureRelativePath)

@@ -1,3 +1,6 @@
+#include <iostream>
+#include <string>
+#include "main.h"
 #include "Player.h"
 
 Player::Player(sf::Vector2f position)
@@ -25,10 +28,10 @@ void Player::update()
     m_sprite.setPosition(m_position);
 }
 
-void Player::draw()
+void Player::draw(Canvas::CanvasType)
 {
     update();
-    gameCanvas->draw(m_sprite);
+    canvas->draw(m_sprite, Canvas::CanvasType::GAME);
 }
 
 void Player::resetMovingCooldown()

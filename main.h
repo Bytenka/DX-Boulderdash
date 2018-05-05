@@ -1,15 +1,9 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "Canvas.h"
+#include "Player.h"
 
-extern sf::RenderTexture* menuCanvas;
-extern sf::RenderTexture* gameCanvas;
+extern Canvas *canvas;
+extern Player *player;
 extern std::string ressourcesPath;
-extern const int g_tileSize;
+extern int g_tileSize;
 
-enum Direction
-{
-    Up = 0,
-    Right,
-    Down,
-    Left
-};

@@ -1,8 +1,5 @@
 #pragma once
-
-#include "main.h"
-#include <iostream>
-#include <string>
+#include "Canvas.h"
 
 class Entity
 {
@@ -15,15 +12,23 @@ class Entity
         FacingLeft
     };
 
+	enum Direction
+	{
+		Up = 0,
+		Right,
+		Down,
+		Left
+	};
+
   public:
     Entity(std::string textureRelativePath);
     ~Entity();
     virtual void move(Direction direction) = 0;
     virtual void update() = 0;
-    virtual void draw()   = 0;
+    virtual void draw(Canvas::CanvasType)   = 0;
 
-  protected:
     sf::Vector2f m_position;
+  protected:
     Orientation  m_orientation;
     sf::Texture  m_texture;
     sf::Sprite   m_sprite;

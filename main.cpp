@@ -1,46 +1,38 @@
 #include <SFML/Graphics.hpp>
 
-#include "main.h"
 #include "Entity.h"
 #include "Player.h"
+#include "Canvas.h"
 
 // LINUX AND WINDOWS BUILD
-#define PATH_TO_RESSOURCES "/home/hugo/Documents/Dev/DX-Boulderdash/Source_files/Ressources/"
-//#define PATH_TO_RESSOURCES "D:/#Windows Stuff/Documents/Dev/DX-Boulderdash/DX-Boulderdash/Ressources/"
+//#define PATH_TO_RESSOURCES "/home/hugo/Documents/Dev/DX-Boulderdash/Source_files/Ressources/"
+#define PATH_TO_RESSOURCES "D:/#Windows Stuff/Documents/Dev/DX-Boulderdash/DX-Boulderdash/Ressources/"
 
+/*
 enum CanvasToDisplay
 {
 	MENU,
 	LEVEL
-};
+};*/
 
-sf::RenderTexture *menuCanvas;
-sf::RenderTexture *gameCanvas;
-CanvasToDisplay currentCanvas;
-const int g_tileSize = 40;
+//CanvasToDisplay currentCanvas;
+int g_tileSize = 40;
+Canvas* canvas;
+Player* player;
 
 std::string ressourcesPath = PATH_TO_RESSOURCES;
 
 int main()
 {
-	Player player(sf::Vector2f(0, 0));
-
-	// Initializing drawing buffers
-	sf::RenderTexture mt;
-	if (!mt.create(640, 480))
-		std::cerr << "Unable to create texture for the menu\n";
-	menuCanvas = &mt;
-
-	sf::RenderTexture gt;
-	if (!gt.create(640, 480))
-		std::cerr << "Unable to create texture for the game\n";
-	gameCanvas = &gt;
+	canvas = new Canvas();
+	player = new Player(sf::Vector2f(0, 0));
 
 	// Initializing window
 	sf::RenderWindow mainWindow(sf::VideoMode(640, 480), "DX-Boulderdash");
 	mainWindow.setFramerateLimit(60);
+	mainWindow.setKeyRepeatEnabled(false);
 
-	currentCanvas = LEVEL; // @DEBUG
+	//currentCanvas = LEVEL; // @DEBUG
 
 	while (mainWindow.isOpen())
 	{
@@ -54,17 +46,16 @@ int main()
 				break;
 
 			case sf::Event::KeyPressed:
-				if (event.key.code == sf::Keyboard::Escape)
-					mainWindow.close();
+				canvas->sendKeyPress(event.key.code);
 				break;
 
 			case sf::Event::KeyReleased:
-				player.resetMovingCooldown();
+				canvas->sendKeyRelease(event.key.code);
 				break;
 			}
 		}
 
-		sf::RenderTexture *canvasToDisplay = nullptr;
+		/*sf::RenderTexture *canvasToDisplay = nullptr;
 		switch (currentCanvas)
 		{
 		case MENU:
@@ -75,12 +66,12 @@ int main()
 			break;
 		default:
 			break;
-		}
+		}*/
 
 		{ // Rendering and logic
 
-			canvasToDisplay->clear(sf::Color::Red);
-			if (currentCanvas == MENU)
+			canvas->clear(Canvas::CanvasType::GAME, sf::Color::Blue);
+			/*if (currentCanvas == MENU)
 			{
 			}
 			else
@@ -95,14 +86,16 @@ int main()
 					player.move(Direction::Right);
 				player.draw();
 			}
-			canvasToDisplay->display();
+			canvasToDisplay->display();*/
 
 		} // Rendering and logic
 
 		// Finally drawing everything to the screen
-		sf::Sprite sprite(canvasToDisplay->getTexture());
-		mainWindow.draw(sprite);
+		player->draw(Canvas::CanvasType::GAME);
+		mainWindow.clear();
+		mainWindow.draw(canvas->getFrame());
 		mainWindow.display();
 	}
+	delete canvas;
 	return 0;
 }

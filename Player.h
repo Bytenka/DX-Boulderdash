@@ -1,8 +1,5 @@
 #pragma once
-#include "main.h"
 #include "Entity.h"
-#include <iostream>
-#include <string>
 
 class Player : public Entity
 {
@@ -11,7 +8,7 @@ public:
   ~Player();
   void move(Direction direction);
   void update();
-  void draw();
+  void draw(Canvas::CanvasType);
   void resetMovingCooldown();
 
 private:
