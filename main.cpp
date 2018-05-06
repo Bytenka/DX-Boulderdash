@@ -1,8 +1,11 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "Entity.h"
 #include "Player.h"
 #include "Canvas.h"
+#include "Level.h"
+#include "Dirt.h"
 
 // LINUX AND WINDOWS BUILD
 //#define PATH_TO_RESSOURCES "/home/hugo/Documents/Dev/DX-Boulderdash/Source_files/Ressources/"
@@ -16,7 +19,7 @@ enum CanvasToDisplay
 };*/
 
 //CanvasToDisplay currentCanvas;
-int g_tileSize = 40;
+int g_tileSize = 32;
 Canvas* canvas;
 Player* player;
 
@@ -24,8 +27,19 @@ std::string ressourcesPath = PATH_TO_RESSOURCES;
 
 int main()
 {
+	/*int** test = new int*[5];
+	for (int i = 0; i < 5; i++)
+	{
+		test[i] = new int;
+		*test[i] = i;
+	}
+
+	std::cout << *test[3] << std::endl;*/
+
 	canvas = new Canvas();
 	player = new Player(sf::Vector2f(0, 0));
+	Level* lvl1 = new Level();
+	std::cout << lvl1->getName() << std::endl;
 
 	// Initializing window
 	sf::RenderWindow mainWindow(sf::VideoMode(640, 480), "DX-Boulderdash");
@@ -91,11 +105,13 @@ int main()
 		} // Rendering and logic
 
 		// Finally drawing everything to the screen
+		lvl1->draw();
 		player->draw(Canvas::CanvasType::GAME);
 		mainWindow.clear();
 		mainWindow.draw(canvas->getFrame());
 		mainWindow.display();
 	}
 	delete canvas;
+	delete player;
 	return 0;
 }

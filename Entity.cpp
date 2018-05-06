@@ -1,18 +1,15 @@
 #include <string>
 #include <iostream>
-#include "main.h"
 #include "Entity.h"
+#include "main.h"
 
 Entity::Entity(std::string textureRelativePath)
-: m_position(sf::Vector2f()), m_orientation(FacingUp)
+	: GameObject(textureRelativePath), m_position(sf::Vector2f(0.0f, 0.0f)), m_orientation(FacingUp)
 {
-    if (!m_texture.loadFromFile(ressourcesPath + textureRelativePath))
-        std::cerr << "Unable to load entity's texture\n";
-    
-    m_sprite.setTexture(m_texture);
-
+	LOG_METHOD_CALL;
 }
 
 Entity::~Entity()
 {
+	LOG_METHOD_CALL;
 }

@@ -6,8 +6,8 @@ class Player : public Entity
 public:
   Player(sf::Vector2f position);
   ~Player();
-  void move(Direction direction);
   void update();
+  void move(Direction direction);
   void draw(Canvas::CanvasType);
   void resetMovingCooldown();
 

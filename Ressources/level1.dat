@@ -1,0 +1,19 @@
+# This is a one line comment
+# The level is constructed with the following blocks :
+# 0 is void
+# D is dirt
+# R is rock
+# G is a green diamond
+# B is a blue diamond
+# NEED TO COMPLETE THE LIST
+# A level must be a rectangle, the first line sets the width
+# Every other instruction is in one single line
+# Example :
+# DDDRDD
+# DDDDDD
+# DDDGBD
+
+name=The first level
+DDDDDDDD
+DDDDDDDD
+DDDDDDDD

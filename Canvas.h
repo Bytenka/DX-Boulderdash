@@ -29,6 +29,7 @@ private:
 	bool m_isDownPressed;
 	bool m_isLeftPressed;
 	bool m_isRightPressed;
+	bool m_isDirKeyPressed; // Used to make only one move at the time
 
 	/* Unused code, but I keep it because it says sommething important
 
@@ -42,4 +43,3 @@ private:
 
 	*/
 };
-

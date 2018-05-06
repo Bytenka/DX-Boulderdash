@@ -1,24 +1,31 @@
 #include <iostream>
 #include <string>
-#include "main.h"
+#include "Canvas.h"
 #include "Player.h"
+#include "main.h"
 
 Player::Player(sf::Vector2f position)
     : Entity("player.png")
 {
-    if (!m_texture.loadFromFile(ressourcesPath + "player.png"))
-    {
-        std::cout << "Unable to load player's graphics\n";
-    }
-
-    m_sprite.setTexture(m_texture);
-
+	LOG_METHOD_CALL;
     std::cout << "Entity Player Created\n";
 }
 
 Player::~Player()
 {
+	LOG_METHOD_CALL;
     std::cout << "Entity Player Destroyed\n";
+}
+
+void Player::draw(Canvas::CanvasType onWhat)
+{
+    update();
+	GameObject::draw(onWhat);
+}
+
+void Player::resetMovingCooldown()
+{
+    m_movingCooldown = 0;
 }
 
 void Player::update()
@@ -26,17 +33,6 @@ void Player::update()
     if (m_movingCooldown > 0)
         m_movingCooldown--;
     m_sprite.setPosition(m_position);
-}
-
-void Player::draw(Canvas::CanvasType)
-{
-    update();
-    canvas->draw(m_sprite, Canvas::CanvasType::GAME);
-}
-
-void Player::resetMovingCooldown()
-{
-    m_movingCooldown = 0;
 }
 
 void Player::move(Direction direction)
@@ -62,7 +58,6 @@ void Player::move(Direction direction)
         dir.x *= g_tileSize;
         dir.y *= g_tileSize;
         m_position += dir;
-        std::cout << m_position.x << " " << m_position.y << std::endl;
         m_movingCooldown += 15;
     }
 }

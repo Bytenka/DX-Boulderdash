@@ -1,9 +1,12 @@
 #include <iostream>
-#include "main.h"
 #include "Canvas.h"
+#include "Player.h"
+#include "main.h"
+
+extern Player* player;
 
 Canvas::Canvas()
-	: m_currentCanvas(GAME), m_isUpPressed(false), m_isDownPressed(false), m_isLeftPressed(false), m_isRightPressed(false)
+	: m_currentCanvas(GAME), m_isDirKeyPressed(false), m_isUpPressed(false), m_isDownPressed(false), m_isLeftPressed(false), m_isRightPressed(false)
 {
 	// Initializing drawing buffers
 	if (!m_menu.create(640, 480))
@@ -38,29 +41,38 @@ void Canvas::clear(CanvasType c, sf::Color color)
 
 void Canvas::sendKeyPress(sf::Keyboard::Key key)
 {
-	switch (key)
+	if (!m_isDirKeyPressed) // Switch on direction keys only is none is pressed
 	{
-	case sf::Keyboard::Key::Up:
-		player->resetMovingCooldown();
-		m_isUpPressed = true;
-		std::cout << "Up is pressed\n";
-		break;
+		m_isDirKeyPressed = true;
+		switch (key)
+		{
+		case sf::Keyboard::Key::Up:
+			//std::cout << "Up is pressed\n";
+			m_isUpPressed = true;
+			player->resetMovingCooldown();
+			break;
 
-	case sf::Keyboard::Key::Down:
-		player->resetMovingCooldown();
-		m_isDownPressed = true;
-		break;
+		case sf::Keyboard::Key::Down:
+			m_isDownPressed = true;
+			player->resetMovingCooldown();
+			break;
 
-	case sf::Keyboard::Key::Left:
-		player->resetMovingCooldown();
-		m_isLeftPressed = true;
-		break;
+		case sf::Keyboard::Key::Left:
+			m_isLeftPressed = true;
+			player->resetMovingCooldown();
+			break;
 
-	case sf::Keyboard::Key::Right:
-		player->resetMovingCooldown();
-		m_isRightPressed = true;
-		break;
+		case sf::Keyboard::Key::Right:
+			m_isRightPressed = true;
+			player->resetMovingCooldown();
+			break;
+		default:
+			break;
+		}
+	}
 
+	switch (key) // Evaluate other keys
+	{
 	default:
 		break;
 	}
@@ -71,8 +83,8 @@ void Canvas::sendKeyRelease(sf::Keyboard::Key key)
 	switch (key)
 	{
 	case sf::Keyboard::Key::Up:
-		m_isUpPressed = false;
 		std::cout << "Up is pressed\n";
+		m_isUpPressed = false;
 		break;
 
 	case sf::Keyboard::Key::Down:
@@ -105,6 +117,9 @@ void Canvas::sendKeyRelease(sf::Keyboard::Key key)
 	default:
 		break;
 	}
+
+	if (!(m_isUpPressed || m_isDownPressed || m_isLeftPressed || m_isRightPressed))
+		m_isDirKeyPressed = false;
 }
 
 void Canvas::setCurrentCanvas(CanvasType c)
