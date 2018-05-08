@@ -24,9 +24,7 @@ public:
 	Entity(std::string textureRelativePath);
 	virtual ~Entity();
 	virtual void move(Direction direction) = 0;
-	virtual void update() = 0;
 
 protected:
 	Orientation  m_orientation;
-	sf::Vector2f m_position;
 };

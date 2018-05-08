@@ -5,6 +5,7 @@
 extern Canvas* canvas;
 
 GameObject::GameObject(std::string textureRelativePath)
+	: m_position(sf::Vector2f(0.0f, 0.0f))
 {
 	LOG_METHOD_CALL;
 	if (!m_texture.loadFromFile(ressourcesPath + textureRelativePath))
@@ -28,9 +29,8 @@ sf::Texture GameObject::getTexture() const
 	return m_texture;
 }
 
-void GameObject::setSprite(sf::Sprite s)
+void GameObject::reloadSprite()
 {
-	setTexture(sf::Texture(*s.getTexture()));
 	m_sprite.setTexture(m_texture);
 }
 
@@ -39,17 +39,23 @@ sf::Sprite GameObject::getSprite() const
 	return m_sprite;
 }
 
-void GameObject::setPosition(sf::Vector2i p)
+void GameObject::setPosition(sf::Vector2f p)
 {
 	m_position = p;
 }
 
-sf::Vector2i GameObject::getPosition() const
+sf::Vector2f GameObject::getPosition() const
 {
 	return m_position;
 }
 
+void GameObject::update()
+{
+	m_sprite.setPosition(m_position);
+}
+
 void GameObject::draw(Canvas::CanvasType onWhat)
 {
+	update();
 	canvas->draw(m_sprite, onWhat);
 }

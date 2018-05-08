@@ -22,6 +22,7 @@ enum CanvasToDisplay
 int g_tileSize = 32;
 Canvas* canvas;
 Player* player;
+Level* loadedLevel;
 
 std::string ressourcesPath = PATH_TO_RESSOURCES;
 
@@ -36,15 +37,18 @@ int main()
 
 	std::cout << *test[3] << std::endl;*/
 
+	//player = new Player(sf::Vector2f());
 	canvas = new Canvas();
-	player = new Player(sf::Vector2f(0, 0));
-	Level* lvl1 = new Level();
-	std::cout << lvl1->getName() << std::endl;
+	loadedLevel = new Level("level1.dat");
+	std::cout << loadedLevel->getName() << std::endl;
 
 	// Initializing window
 	sf::RenderWindow mainWindow(sf::VideoMode(640, 480), "DX-Boulderdash");
-	mainWindow.setFramerateLimit(60);
+	//mainWindow.setFramerateLimit(600);
 	mainWindow.setKeyRepeatEnabled(false);
+	sf::Image winIcon;
+	winIcon.loadFromFile(ressourcesPath + "player.png");
+	mainWindow.setIcon(32, 32, winIcon.getPixelsPtr());
 
 	//currentCanvas = LEVEL; // @DEBUG
 
@@ -105,8 +109,7 @@ int main()
 		} // Rendering and logic
 
 		// Finally drawing everything to the screen
-		lvl1->draw();
-		player->draw(Canvas::CanvasType::GAME);
+		loadedLevel->draw();
 		mainWindow.clear();
 		mainWindow.draw(canvas->getFrame());
 		mainWindow.display();

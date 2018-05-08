@@ -4,13 +4,16 @@
 class Player : public Entity
 {
 public:
-  Player(sf::Vector2f position);
+  Player();
   ~Player();
   void update();
   void move(Direction direction);
-  void draw(Canvas::CanvasType);
   void resetMovingCooldown();
 
 private:
-  int m_movingCooldown = 0;
+  sf::Clock m_movingCooldown;
+  sf::Time m_movingCooldownValue;
+  int m_diamondsCollected;
+  bool m_oneMoveAllowed;
+  bool attemptMove(sf::Vector2i);
 };

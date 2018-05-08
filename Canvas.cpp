@@ -1,9 +1,11 @@
 #include <iostream>
 #include "Canvas.h"
 #include "Player.h"
+#include "Level.h"
 #include "main.h"
 
 extern Player* player;
+extern Level* loadedLevel;
 
 Canvas::Canvas()
 	: m_currentCanvas(GAME), m_isDirKeyPressed(false), m_isUpPressed(false), m_isDownPressed(false), m_isLeftPressed(false), m_isRightPressed(false)
@@ -83,7 +85,6 @@ void Canvas::sendKeyRelease(sf::Keyboard::Key key)
 	switch (key)
 	{
 	case sf::Keyboard::Key::Up:
-		std::cout << "Up is pressed\n";
 		m_isUpPressed = false;
 		break;
 
@@ -138,6 +139,7 @@ void Canvas::draw(sf::Drawable& sprite, CanvasType c)
 	case MENU:
 		m_menu.draw(sprite);
 		break;
+
 	default:
 		std::cerr << "Undefined canvas in function " << __FUNCTION__ << std::endl;
 		break;
@@ -165,6 +167,7 @@ void Canvas::update(CanvasType thisOne)
 
 	}
 	break;
+
 	default:
 		std::cerr << "Undefined canvas in function " << __FUNCTION__ << std::endl;
 		break;
